@@ -1,0 +1,6 @@
+# Dependências do Frontend Web - Número Misterioso Online
+flask>=2.3.0
+flask-socketio>=5.3.0
+python-socketio>=5.8.0
+eventlet>=0.33.0
+
