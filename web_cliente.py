@@ -83,21 +83,21 @@ class ConexaoJogo:
     
     def identificar_tipo_mensagem(self, mensagem):
         """Identifica o tipo de mensagem para estilização no frontend"""
-        if 'ACERTOU' in mensagem or 'PARABÉNS' in mensagem or '🏆' in mensagem:
+        if 'ACERTOU' in mensagem or 'PARABÉNS' in mensagem:
             return 'vitoria'
-        elif 'Muito BAIXO' in mensagem or '📈' in mensagem:
+        elif 'Muito BAIXO' in mensagem or '[BAIXO]' in mensagem:
             return 'baixo'
-        elif 'Muito ALTO' in mensagem or '📉' in mensagem:
+        elif 'Muito ALTO' in mensagem or '[ALTO]' in mensagem:
             return 'alto'
-        elif 'NOVA RODADA' in mensagem or '🔄' in mensagem:
+        elif 'NOVA RODADA' in mensagem:
             return 'nova_rodada'
-        elif 'RANKING' in mensagem or '🏆 RANKING' in mensagem:
+        elif 'RANKING' in mensagem:
             return 'ranking'
         elif 'entrou no jogo' in mensagem or 'saiu do jogo' in mensagem:
             return 'sistema'
         elif 'Bem-vindo' in mensagem:
             return 'boas_vindas'
-        elif '❌' in mensagem or '⚠️' in mensagem:
+        elif '[ERRO]' in mensagem or '[AVISO]' in mensagem:
             return 'erro'
         else:
             return 'normal'
@@ -131,7 +131,7 @@ def index():
 @socketio.on('connect')
 def handle_connect():
     """Quando um cliente web conecta"""
-    print(f'🌐 Cliente web conectado: {request.sid}')
+    print(f'[WEB] Cliente web conectado: {request.sid}')
 
 
 @socketio.on('disconnect')
@@ -141,7 +141,7 @@ def handle_disconnect():
     if sid in conexoes_tcp:
         conexoes_tcp[sid].desconectar()
         del conexoes_tcp[sid]
-    print(f'🔌 Cliente web desconectado: {sid}')
+    print(f'[WEB] Cliente web desconectado: {sid}')
 
 
 @socketio.on('conectar_jogo')
@@ -163,7 +163,7 @@ def handle_conectar_jogo(data):
     if sucesso:
         conexoes_tcp[sid] = conexao
         emit('conectado', {'mensagem': mensagem, 'nome': nome})
-        print(f'✅ {nome} conectou ao jogo via web')
+        print(f'[OK] {nome} conectou ao jogo via web')
     else:
         emit('erro_conexao', {'mensagem': mensagem})
 
@@ -196,17 +196,17 @@ def handle_desconectar_jogo():
 if __name__ == '__main__':
     print("""
     ╔════════════════════════════════════════════════════════════╗
-    ║   🌐 NÚMERO MISTERIOSO - FRONTEND WEB 🌐                   ║
-    ║   Trabalho de Redes de Computadores                        ║
+    ║   === NÚMERO MISTERIOSO - FRONTEND WEB ===             ║
+    ║   Trabalho de Redes de Computadores                  ║
     ╚════════════════════════════════════════════════════════════╝
     """)
     
-    print("📌 Instruções:")
+    print("=== Instruções:")
     print("   1. Inicie o servidor.py em outro terminal")
     print("   2. Acesse http://localhost:5000 no navegador")
     print("   3. Digite seu nome e conecte-se ao jogo!")
     print("")
-    print("🚀 Iniciando servidor web...")
+    print("[INICIO] Iniciando servidor web...")
     print("=" * 60)
     
     # Cria pasta templates se não existir
